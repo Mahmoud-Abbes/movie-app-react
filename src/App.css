@@ -1,0 +1,652 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+.App {
+  background-color: #fafafa;
+  height: 100vh;
+}
+
+.main-content {
+  padding: 50px 80px 50px 80px;
+}
+
+.hading-bar {
+  background-color: #144184;
+  padding: 10px 50px 10px 65px !important ;
+}
+
+#nav-image {
+  font-size: 40px;
+  color: white;
+  margin-top: -10px;
+}
+
+.nav-title {
+  font-size: 25px;
+  font-family: "Roboto";
+  font-weight: 300;
+}
+
+#search-bar {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+#search-input {
+  border-radius: 0px 35px 35px 0px;
+  border: white;
+  font-family: "Roboto";
+  font-weight: 300;
+}
+
+#search-input:focus {
+  box-shadow: none;
+  font-family: "Roboto";
+  color: black;
+}
+
+#search-btn {
+  border-radius: 35px 0px 0px 35px;
+  display: flex;
+  align-items: center;
+  font-size: 25px;
+  background-color: white;
+  border-color: transparent;
+  margin-right: -0.1px;
+  color: black;
+  cursor: default;
+}
+
+.movie-list {
+  /* ------------------------------------------------------------------------- */
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.movie-card {
+  position: relative;
+  width: 180px;
+  border-radius: 5px;
+  margin-bottom: 25px;
+}
+
+.movie-image {
+  position: relative;
+  height: 78.2%;
+  width: 100%;
+  border-radius: 15px;
+}
+
+.movie-title {
+  font-size: 14px;
+  font-family: "Roboto";
+  font-weight: 500;
+  text-decoration: none solid rgb(102, 102, 102);
+}
+
+.movie-info-container {
+  padding: 10px 10px 10px 10px;
+  flex-direction: column;
+  display: flex;
+}
+
+.movie-type {
+  font-family: "Roboto";
+  font-size: 12px;
+  border: solid transparent;
+  border-color: #aaaaaa9d;
+  padding: 2px;
+  border-width: 1px;
+  border-radius: 5px;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+  color: #666666;
+}
+
+.movie-type-title {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 14px;
+  color: #666666;
+}
+
+.movie-type-container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px 0px 0px;
+}
+
+.movie-rating {
+  position: absolute;
+  background-color: #616e803a;
+  top: 0;
+  height: 78.2%;
+  width: 100%;
+  border-radius: 14px;
+  animation: 3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: 0.2s ease-in;
+}
+
+.movie-rating:hover {
+  opacity: 1;
+}
+
+.movie-quality {
+  color: black;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px 15px 0px 0px;
+  background-color: white;
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  font-family: "arial";
+  font-weight: 600;
+  border-radius: 5px;
+}
+
+.play-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20%;
+  width: 30%;
+  border-radius: 35px;
+  margin-top: 80px;
+  background-color: #3e8afa;
+  color: white;
+  border-color: transparent;
+}
+
+.filter-bar {
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-title {
+  font-family: "Roboto";
+  font-size: 30px;
+  font-weight: 300;
+}
+
+.filter-btn {
+  border-color: transparent;
+  border-radius: 5px;
+  width: 85px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-family: "Roboto";
+}
+
+.filter-content {
+  height: 300px;
+  width: 100%;
+  border-style: dashed;
+  margin: -30px 0px 30px 00px;
+  border-width: 1px;
+  border-color: #aaaaaa;
+  background-color: white;
+  padding: 20px;
+}
+
+.filter-types {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-type-title {
+  font-weight: 500;
+  font-family: "Roboto";
+  font-size: 16px;
+  width: 80px;
+}
+
+.radio-input-title {
+  margin-left: 10px;
+  font-family: "Roboto";
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.radio-input {
+  margin-left: 10px;
+  height: 20px;
+  width: 20px;
+}
+
+.genre-label {
+  font-family: "Roboto";
+}
+
+.genre-input {
+  width: 16px;
+  height: 16px;
+}
+
+.nav-icons {
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+}
+
+.nav-icons-functionality-icon {
+  width: 50%;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.nav-icons-user-icon {
+  width: 0px;
+}
+
+.nav-icon {
+  height: 45px;
+  width: 45px;
+  color: white;
+  padding: 10px;
+  border-radius: 35px;
+  background-color: #0c27503f;
+  margin-left: 15px;
+}
+
+.nav-icon:hover {
+  cursor: pointer;
+  background-color: #0c2750;
+  transition: 0.5s;
+}
+
+.movie-admin-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  height: 50%;
+  margin-top: 25px;
+}
+
+.movie-edit-btn {
+  margin-top: 35px;
+  background-color: #0f92e9c0 !important;
+  height: 50px;
+  width: 50px;
+  border-color: transparent !important;
+  border-radius: 35px !important;
+  font-size: 25px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 5s ease;
+}
+
+.movie-edit-btn:hover {
+  background-color: #2a99f5 !important;
+}
+
+.movie-delete-btn {
+  margin-top: 5px;
+  background-color: #ff5a549c !important;
+  height: 50px;
+  width: 50px;
+  border-color: transparent !important;
+  border-radius: 35px !important;
+  font-size: 25px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.movie-delete-btn:hover {
+  background-color: #db3a3c !important;
+}
+
+.delete-movie-title {
+  font-size: 23px;
+  font-family: "Inter";
+  font-weight: 700;
+  margin-top: 10px;
+  letter-spacing: 2px;
+  color: #33404c;
+}
+
+.delete-movie-description {
+  width: 65%;
+  text-align: center;
+  height: 50px;
+  font-weight: 400;
+  font-family: "Inter";
+}
+
+.delte-btns {
+  width: 30%;
+  height: 45px;
+  border-radius: 35px !important;
+  font-size: 20px;
+  font-family: "Inter" !important;
+  font-weight: 600 !important;
+  border-color: transparent !important;
+}
+
+.cancle-delete-btn {
+  color: #33404c !important;
+  background-color: #f5f5f7 !important;
+}
+
+.cancle-delete-btn:hover {
+  background-color: #efeff0 !important;
+}
+
+.confirm-delete-btn {
+  background-color: #ff3f56 !important;
+}
+
+.confirm-delete-btn:hover {
+  background-color: #ff243d !important;
+}
+
+.dividor-bar {
+  width: 0.5px;
+  background-color: #dee2e6;
+  height: calc(100%+50px);
+}
+
+.edit-form-label {
+  font-family: "Inter";
+  display: flex;
+  align-items: center;
+}
+
+.edit-movie-rating-label {
+  margin-right: 15px;
+}
+
+.form-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-control {
+  width: 50% !important;
+}
+
+.edit-image-input {
+  width: 90% !important;
+  height: 70%;
+}
+
+.edit-image {
+  position: relative;
+  width: 75%;
+  border-radius: 15px;
+  margin-left: calc(7%);
+}
+
+.edit-image-holder {
+  height: 230px;
+}
+
+.edit-trailer-video {
+  width: 98%;
+  height: 70%;
+  border-radius: 25px;
+}
+
+.edit-trailer-input {
+  width: 90% !important;
+  height: 40%;
+}
+
+.genre-form-control {
+  width: 90% !important;
+}
+
+.genre-form-control-list {
+  height: 65px;
+  overflow-y: scroll;
+  margin-bottom: -25px;
+}
+
+.image-over-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #0c2750d5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  z-index: 3000;
+}
+
+.home-image {
+  color: white;
+  font-size: 90px;
+  margin-bottom: 20px;
+}
+
+.home-title {
+  font-size: 50px;
+  color: white;
+  font-family: "Inter";
+  text-shadow: -5px 2px 30px #ffffff;
+}
+
+.home-description {
+  color: white;
+  font-size: 19px;
+  width: 60%;
+  text-align: center;
+  margin-bottom: 40px;
+  font-family: "Inter";
+}
+
+.button-36 {
+  background-image: linear-gradient(
+    92.88deg,
+    #455eb5 9.16%,
+    #5643cc 43.89%,
+    #673fd7 64.72%
+  );
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-family: "Inter UI", "SF Pro Display", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+    sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  height: 4rem;
+  padding: 0 1.6rem;
+  text-align: center;
+  text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
+  transition: all 0.5s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-36:hover {
+  box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
+  transition-duration: 0.1s;
+}
+
+@media (min-width: 768px) {
+  .button-36 {
+    padding: 0 2.6rem;
+  }
+}
+
+.movie-page-image-container {
+  width: 100%;
+  height: 60vh;
+  position: absolute;
+  background: linear-gradient(
+    181deg,
+    rgba(20, 65, 132, 1) 0%,
+    rgba(63, 98, 158, 1) 34%,
+    rgb(151, 184, 247) 100%
+  );
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.movie-page-breadcrumbs{
+  margin: 100px 0px 0px 0px;
+  width: 90.1%;
+}
+
+.movie-heading {
+  background-color: transparent;
+  position: relative;
+  z-index: 300;
+}
+
+.movie-details {
+  width: 90%;
+  height: 75%;
+  background-color: white;
+  margin-bottom: calc(-12%);
+  border-radius: 25px;
+  box-shadow: -15px 5px 63px 15px rgba(0, 0, 0, 0.06);
+  -webkit-box-shadow: -15px 5px 63px 15px rgba(0, 0, 0, 0.06);
+  -moz-box-shadow: -15px 5px 63px 15px rgba(0, 0, 0, 0.06);
+  padding: 30px;
+  display: flex;
+}
+
+.movie-details img {
+  height: 100%;
+  border-radius: 20px;
+  margin-right: 30px;
+}
+
+.movie-details .name {
+  font-family: "Roboto";
+  font-size: 25px;
+}
+
+.movie-details .description{
+  font-family: "Roboto";
+  font-size: 18px;
+  font-weight: 300;
+  margin-bottom: 30px;
+}
+
+.movie-details .trailer-btn {
+  border-radius: 35px;
+  display: flex;
+  align-items: center;
+  width: 140px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  background-color: #3e8afa;
+  border-color: transparent;
+}
+
+.movie-details .trailer-btn:hover {
+  background-color: #2160bc;
+}
+
+
+.movie-details .quality{
+  color: black;
+  margin-right: 20px;
+  background-color: white;
+  width: 70px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 17px;
+  border-radius: 5px;
+  border: solid black;
+  border-width: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.movie-details .media{
+  border: solid black;
+  width: 90px;
+  height: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 35px;
+  font-size: 17px;
+  font-family: "Inter";
+  border-width: 1px; 
+  border-color: rgb(81, 79, 79);
+  color: rgb(60, 59, 59);
+}
+
+.bread-crumb{
+  text-decoration: none;
+  /* color: #b8b9ba; */
+  color: rgb(212, 212, 212);
+}
+
+.bread-crumb:hover{
+  text-decoration: underline;
+}
+
+.bread-crumb-movies{
+  color: rgb(82, 81, 81);
+}
+
+.trailer-modal .modal-content{
+  border-radius: 17px !important;
+  border-color: transparent !important;
+}
+
+.trailer-close-btn{
+  background-color: #b1b1b1 !important;
+  border-color: transparent !important;
+  font-size: 26px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center;
+  height: 50px;
+  width: 50px;
+}
+
+.trailer-close-btn:hover{
+  background-color: #949494 !important;
+}
+
+.trailer-close-btn-shown{
+  opacity: 1;
+}
+
+.trailer-close-btn-hidden{
+  opacity: 0;
+}
