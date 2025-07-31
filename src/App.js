@@ -100,6 +100,8 @@ function App() {
                 content={"Home"}
               />
               <HomePage />
+
+              <Footer />
             </div>
           }
         ></Route>
@@ -118,35 +120,38 @@ function App() {
                 addMovie={addMovie}
                 content={"Movies"}
               />
-              <div className="main-content">
-                <MovieList
-                  movies={shownMovies}
-                  typeFilter={typeFilter}
-                  qualityFilter={qualityFilter}
-                  ratingFilter={ratingFilter}
-                  genreFilter={genreFilter}
-                  textFilter={textFilter}
-                  role={role}
-                  deleteMovie={handleDeleteMovie}
-                  typesExtractor={typesExtractor}
-                  qualityExtractor={qualityExtractor}
-                  genreExtractor={genreExtractor}
-                  editMovie={editMovie}
-                  resetFilters={resetFilters}
-                  /* Filter props */
+              <div>
+                <div className="main-content">
+                  <MovieList
+                    movies={shownMovies}
+                    typeFilter={typeFilter}
+                    qualityFilter={qualityFilter}
+                    ratingFilter={ratingFilter}
+                    genreFilter={genreFilter}
+                    textFilter={textFilter}
+                    role={role}
+                    deleteMovie={handleDeleteMovie}
+                    typesExtractor={typesExtractor}
+                    qualityExtractor={qualityExtractor}
+                    genreExtractor={genreExtractor}
+                    editMovie={editMovie}
+                    resetFilters={resetFilters}
+                    /* Filter props */
 
-                  setTypeFilter={setTypeFilter}
-                  setQualityFilter={setQualityFilter}
-                  // movies={shownMovies}
-                  setRatingFilter={setRatingFilter}
-                  // ratingFilter={ratingFilter}
-                  modifyGenreFilter={handleGenreFilter}
-                  // textFilter={textFilter}
-                  // typesExtractor={typesExtractor}
-                  // qualityExtractor={qualityExtractor}
-                  // genreExtractor={genreExtractor}
-                />
+                    setTypeFilter={setTypeFilter}
+                    setQualityFilter={setQualityFilter}
+                    // movies={shownMovies}
+                    setRatingFilter={setRatingFilter}
+                    // ratingFilter={ratingFilter}
+                    modifyGenreFilter={handleGenreFilter}
+                    // textFilter={textFilter}
+                    // typesExtractor={typesExtractor}
+                    // qualityExtractor={qualityExtractor}
+                    // genreExtractor={genreExtractor}
+                  />
+                </div>
               </div>
+              <Footer />
             </div>
           }
         />
@@ -166,11 +171,17 @@ function App() {
                 content={"Movie"}
               />
               <MoviePage movies={shownMovies} />
+              <div style={{ position: "absolute", marginTop: "710px" }}>
+                <Footer />
+              </div>
             </div>
           }
         ></Route>
       </Routes>
-      <Footer />
+
+      {/* <div style={{ position: "absolute", marginTop: "700px" }}>
+        <Footer />
+      </div> */}
     </div>
   );
 }

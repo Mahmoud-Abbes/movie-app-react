@@ -7,7 +7,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 const HomePage = () => {
   console.log(useParams());
   return (
-    <div style={{ height: "300vh", backgroundColor: "#1953aa" }}>
+    <div style={{backgroundColor: "#3c5f93ff" }}>
       <div
         style={{
           height: "89.743vh",
@@ -79,6 +79,27 @@ const HomePage = () => {
             </Link>
           </div>
         </div>
+      </div>
+      <div className="who-are-we">
+        <span className="description">Who We Are</span>
+        <span className="paragraph">
+          We’re a team of film lovers, designers, and developers who believe
+          choosing a great movie should be simple and fun. Whether you're a
+          casual viewer or a hardcore cinephile, our mission is to help you
+          discover movies you'll love by combining community-driven ratings with
+          official trailers and clean design.
+        </span>
+
+        <span className="description">Why Choose Us</span>
+        <span className="paragraph">
+          <ul>
+            <li>Watch Before You Decide: Instantly stream official trailers to get a feel for the movie.</li>
+            <li>Smart Recommendations: Discover trending and top-rated films based on real user feedback.</li>
+            <li>Simple & Intuitive: Enjoy a smooth, clutter-free experience on any device.</li>
+            <li>Honest Ratings: See what others really think with aggregated user and critic scores.</li>
+            <li>Always Up to Date: Stay in the loop with the latest releases and trailers.</li>
+          </ul>
+        </span>
       </div>
     </div>
   );
