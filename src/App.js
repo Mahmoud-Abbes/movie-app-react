@@ -3,10 +3,11 @@ import "./App.css";
 import Heading from "./components/Heading";
 import MovieList from "./components/MovieList";
 import { movies } from "./DataBase";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import MoviePage from "./components/MoviePage";
 import Footer from "./components/Footer";
+import { Login } from "./components/Login";
 
 function App() {
   const [shownMovies, setShownMovies] = useState(movies);
@@ -17,7 +18,11 @@ function App() {
   const [genreFilter, setGenreFilter] = useState([]);
   const [textFilter, setTextFilter] = useState("");
 
-  const [role, setRole] = useState("User");
+  const [role, setRole] = useState("Visitor");
+
+  const [userList, setuserList] = useState([
+    { email: "admin@gmail.com", password: "adminadmin" },
+  ]);
 
   const handleGenreFilter = (genre) => {
     genreFilter.includes(genre)
@@ -81,9 +86,55 @@ function App() {
     setTextFilter("");
   };
 
+  const handleLogin = (email, pass) => {
+    console.log(`In the parameters : ${email} pass: ${pass}`);
+    if (email === "admin@gmail.com") {
+      if (pass === "adminadmin") {
+        setRole("Admin");
+        return true;
+      }
+      return false;
+    }
+
+    let accountFetch = userList.find((el) => el.email === email);
+    if (accountFetch) {
+      if (accountFetch.password === pass) {
+        setRole("User");
+        return true;
+      }
+      return false;
+    }
+    return false;
+  };
+
+  const handleRegister = (email, pass) => {
+    let existsEmail = userList.find((el) => el.email === email);
+    if (existsEmail) {
+      return false;
+    }
+
+    let newUser = {
+      email: email,
+      password: pass,
+    };
+
+    setuserList([...userList, newUser]);
+    return true;
+  };
+
+  const handleLogout = () => {
+    setRole("Visitor");
+  };
+
   return (
     <div className="App">
       <Routes>
+        <Route
+          path="/login"
+          element={
+            <Login handleLogin={handleLogin} handleRegister={handleRegister} />
+          }
+        />
         <Route
           path="/"
           element={
@@ -92,12 +143,13 @@ function App() {
                 setTextFilter={setTextFilter}
                 setShownMovies={setShownMovies}
                 role={role}
-                setRole={setRole}
                 typesExtractor={typesExtractor}
                 qualityExtractor={qualityExtractor}
                 genreExtractor={genreExtractor}
                 addMovie={addMovie}
                 content={"Home"}
+                handleLogout={handleLogout}
+                isLogged={role !== "Visitor"}
               />
               <HomePage />
 
@@ -108,51 +160,56 @@ function App() {
         <Route
           path="/movies"
           element={
-            <div>
-              <Heading
-                setTextFilter={setTextFilter}
-                setShownMovies={setShownMovies}
-                role={role}
-                setRole={setRole}
-                typesExtractor={typesExtractor}
-                qualityExtractor={qualityExtractor}
-                genreExtractor={genreExtractor}
-                addMovie={addMovie}
-                content={"Movies"}
-              />
+            role !== "Visitor" ? (
               <div>
-                <div className="main-content">
-                  <MovieList
-                    movies={shownMovies}
-                    typeFilter={typeFilter}
-                    qualityFilter={qualityFilter}
-                    ratingFilter={ratingFilter}
-                    genreFilter={genreFilter}
-                    textFilter={textFilter}
-                    role={role}
-                    deleteMovie={handleDeleteMovie}
-                    typesExtractor={typesExtractor}
-                    qualityExtractor={qualityExtractor}
-                    genreExtractor={genreExtractor}
-                    editMovie={editMovie}
-                    resetFilters={resetFilters}
-                    /* Filter props */
-
-                    setTypeFilter={setTypeFilter}
-                    setQualityFilter={setQualityFilter}
-                    // movies={shownMovies}
-                    setRatingFilter={setRatingFilter}
-                    // ratingFilter={ratingFilter}
-                    modifyGenreFilter={handleGenreFilter}
-                    // textFilter={textFilter}
-                    // typesExtractor={typesExtractor}
-                    // qualityExtractor={qualityExtractor}
-                    // genreExtractor={genreExtractor}
-                  />
+                <Heading
+                  setTextFilter={setTextFilter}
+                  setShownMovies={setShownMovies}
+                  role={role}
+                  setRole={setRole}
+                  typesExtractor={typesExtractor}
+                  qualityExtractor={qualityExtractor}
+                  genreExtractor={genreExtractor}
+                  addMovie={addMovie}
+                  content={"Movies"}
+                  handleLogout={handleLogout}
+                  isLogged={role !== "Visitor"}
+                />
+                <div>
+                  <div className="main-content">
+                    <MovieList
+                      movies={shownMovies}
+                      typeFilter={typeFilter}
+                      qualityFilter={qualityFilter}
+                      ratingFilter={ratingFilter}
+                      genreFilter={genreFilter}
+                      textFilter={textFilter}
+                      role={role}
+                      deleteMovie={handleDeleteMovie}
+                      typesExtractor={typesExtractor}
+                      qualityExtractor={qualityExtractor}
+                      genreExtractor={genreExtractor}
+                      editMovie={editMovie}
+                      resetFilters={resetFilters}
+                      /* Filter props */
+                      setTypeFilter={setTypeFilter}
+                      setQualityFilter={setQualityFilter}
+                      // movies={shownMovies}
+                      setRatingFilter={setRatingFilter}
+                      // ratingFilter={ratingFilter}
+                      modifyGenreFilter={handleGenreFilter}
+                      // textFilter={textFilter}
+                      // typesExtractor={typesExtractor}
+                      // qualityExtractor={qualityExtractor}
+                      // genreExtractor={genreExtractor}
+                    />
+                  </div>
                 </div>
+                <Footer />
               </div>
-              <Footer />
-            </div>
+            ) : (
+              <Navigate to={"/login"} />
+            )
           }
         />
         <Route
@@ -169,6 +226,8 @@ function App() {
                 genreExtractor={genreExtractor}
                 addMovie={addMovie}
                 content={"Movie"}
+                handleLogout={handleLogout}
+                isLogged={role !== "Visitor"}
               />
               <MoviePage movies={shownMovies} />
               <div style={{ position: "absolute", marginTop: "710px" }}>

@@ -7,21 +7,27 @@ import { RiAdminLine } from "react-icons/ri";
 import AddMovie from "./Admin/AddMovie";
 import { BiMovie } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import { CiLogout } from "react-icons/ci";
+import { IoMdLogIn } from "react-icons/io";
 
 const Heading = ({
   setTextFilter,
   role,
-  setRole,
+  handleLogout,
   typesExtractor,
   qualityExtractor,
   genreExtractor,
   addMovie,
   content,
+  isLogged,
 }) => {
   const [showAddMovie, setShowAddMovie] = useState(false);
   return (
     <div>
-      <Navbar expand="lg" className={`hading-bar ${content === "Movie" ? "movie-heading" :null}`}>
+      <Navbar
+        expand="lg"
+        className={`hading-bar ${content === "Movie" ? "movie-heading" : null}`}
+      >
         <AddMovie
           typesExtractor={typesExtractor}
           qualityExtractor={qualityExtractor}
@@ -41,7 +47,7 @@ const Heading = ({
             }}
           >
             <Navbar.Brand id="nav-image">
-              <MdLocalMovies style={{marginRight: "15px"}} />
+              <MdLocalMovies style={{ marginRight: "15px" }} />
               <span className="nav-title">
                 {content !== "Home" ? "MOVIES FOR ALL" : null}
               </span>
@@ -68,9 +74,7 @@ const Heading = ({
 
           <div className="nav-icons" style={{ width: "20%" }}>
             <div className="nav-icons-functionality-icon">
-              <Link to="/movies">
-                <BiMovie className="nav-icon" />
-              </Link>
+              <div></div>
 
               {role === "Admin" && content !== "Home" ? (
                 <div>
@@ -79,19 +83,33 @@ const Heading = ({
                     onClick={() => setShowAddMovie(true)}
                   />
                 </div>
+              ) : content !== "Movies" ? (
+                isLogged ? (
+                  <Link to="/movies">
+                    <BiMovie className="nav-icon" />
+                  </Link>
+                ) : null
               ) : null}
             </div>
             <div className="nav-icons-user-icon">
-              {role === "Admin" ? (
-                <RiAdminLine
-                  className="nav-icon"
-                  onClick={() => setRole("User")}
-                />
+              {isLogged ? (
+                role === "Admin" ? (
+                  <RiAdminLine className="nav-icon" />
+                ) : (
+                  <AiOutlineUser className="nav-icon" />
+                )
               ) : (
-                <AiOutlineUser
-                  className="nav-icon"
-                  onClick={() => setRole("Admin")}
-                />
+                <Link to="/movies">
+                  <BiMovie className="nav-icon" />
+                </Link>
+              )}
+
+              {isLogged ? (
+                <CiLogout className="nav-icon" onClick={() => handleLogout()} />
+              ) : (
+                <Link to={"/login"}>
+                  <IoMdLogIn className="nav-icon" />
+                </Link>
               )}
             </div>
           </div>
