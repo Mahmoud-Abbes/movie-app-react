@@ -7,30 +7,33 @@ import ReactStars from "react-stars";
 import DeleteMovie from "./Admin/DeleteMovie";
 import EditMovie from "./Admin/EditMovie";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const MovieCard = ({
   el,
-  role,
-  deleteMovie,
+  // role,
   typesExtractor,
   qualityExtractor,
   genreExtractor,
-  editMovie,
   resetFilters,
 }) => {
   const [showDelete, setShowDelete] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
+  const { currentUser } = useSelector((state) => state.userReducer);
 
   return (
     <div className="movie-card">
-      <Link to={role === "User" ?`/movie/${el.id}`: null} onClick={() => role === "User" ? resetFilters():null} >
+      <Link
+        to={currentUser.role === "User" ? `/movie/${el.id}` : null}
+        onClick={() => (currentUser.role === "User" ? resetFilters() : null)}
+      >
         <img src={el.imageURL} alt="" className="movie-image" />
         <div className="movie-quality">
           <span>{el.quality}</span>
         </div>
 
         <div className="movie-rating">
-          {role === "User" ? (
+          {currentUser.role === "User" ? (
             <button className="play-btn">
               <FaPlay style={{ marginLeft: "3px" }} />
             </button>
@@ -73,14 +76,8 @@ const MovieCard = ({
         show={showEdit}
         setShow={setShowEdit}
         el={el}
-        editMovie={editMovie}
       />
-      <DeleteMovie
-        deleteMovie={deleteMovie}
-        el={el}
-        show={showDelete}
-        setShow={setShowDelete}
-      />
+      <DeleteMovie el={el} show={showDelete} setShow={setShowDelete} />
 
       <div className="movie-info-container">
         <span className="movie-title">

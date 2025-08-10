@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import ReactStars from "react-stars";
 import { ToastContainer, toast } from "react-toastify";
+import { editMovie } from "../../redux/actions";
 
 const EditMovie = ({
   show,
@@ -10,8 +12,8 @@ const EditMovie = ({
   typesExtractor,
   qualityExtractor,
   genreExtractor,
-  editMovie,
 }) => {
+  const dispatch = useDispatch();
   const [name, setName] = useState(el.name);
   const [trailerLink, setTrailerLink] = useState(el.trailerLink);
   const [rating, setRating] = useState(el.rating);
@@ -74,7 +76,8 @@ const EditMovie = ({
         theme: "light",
       });
     } else {
-      editMovie(editedMovie);
+      dispatch(editMovie(editedMovie));
+      
       handleClose();
     }
   };

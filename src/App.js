@@ -2,14 +2,15 @@ import { useState } from "react";
 import "./App.css";
 import Heading from "./components/Heading";
 import MovieList from "./components/MovieList";
-import { movies } from "./DataBase";
 import { Navigate, Route, Routes } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import MoviePage from "./components/MoviePage";
 import Footer from "./components/Footer";
 import { Login } from "./components/Login";
+import { useSelector } from "react-redux";
 
 function App() {
+  const { movies } = useSelector((state) => state.reducer);
   const [shownMovies, setShownMovies] = useState(movies);
 
   const [qualityFilter, setQualityFilter] = useState("All");
@@ -18,20 +19,13 @@ function App() {
   const [genreFilter, setGenreFilter] = useState([]);
   const [textFilter, setTextFilter] = useState("");
 
-  const [role, setRole] = useState("Visitor");
+  const { currentUser } = useSelector(state => state.userReducer)
 
-  const [userList, setuserList] = useState([
-    { email: "admin@gmail.com", password: "adminadmin" },
-  ]);
 
   const handleGenreFilter = (genre) => {
     genreFilter.includes(genre)
       ? setGenreFilter(genreFilter.filter((el) => el !== genre))
       : setGenreFilter([...genreFilter, genre]);
-  };
-
-  const handleDeleteMovie = (id) => {
-    setShownMovies(shownMovies.filter((el) => el.id !== id));
   };
 
   const typesExtractor = () => {
@@ -70,14 +64,6 @@ function App() {
     return genres;
   };
 
-  const editMovie = (movie) => {
-    setShownMovies(shownMovies.map((el) => (el.id === movie.id ? movie : el)));
-  };
-
-  const addMovie = (movie) => {
-    setShownMovies([...shownMovies, movie]);
-  };
-
   const resetFilters = () => {
     setQualityFilter("All");
     setTypeFilter("All");
@@ -86,53 +72,13 @@ function App() {
     setTextFilter("");
   };
 
-  const handleLogin = (email, pass) => {
-    console.log(`In the parameters : ${email} pass: ${pass}`);
-    if (email === "admin@gmail.com") {
-      if (pass === "adminadmin") {
-        setRole("Admin");
-        return true;
-      }
-      return false;
-    }
-
-    let accountFetch = userList.find((el) => el.email === email);
-    if (accountFetch) {
-      if (accountFetch.password === pass) {
-        setRole("User");
-        return true;
-      }
-      return false;
-    }
-    return false;
-  };
-
-  const handleRegister = (email, pass) => {
-    let existsEmail = userList.find((el) => el.email === email);
-    if (existsEmail) {
-      return false;
-    }
-
-    let newUser = {
-      email: email,
-      password: pass,
-    };
-
-    setuserList([...userList, newUser]);
-    return true;
-  };
-
-  const handleLogout = () => {
-    setRole("Visitor");
-  };
-
   return (
     <div className="App">
       <Routes>
         <Route
           path="/login"
           element={
-            <Login handleLogin={handleLogin} handleRegister={handleRegister} />
+            <Login />
           }
         />
         <Route
@@ -141,18 +87,12 @@ function App() {
             <div>
               <Heading
                 setTextFilter={setTextFilter}
-                setShownMovies={setShownMovies}
-                role={role}
                 typesExtractor={typesExtractor}
                 qualityExtractor={qualityExtractor}
                 genreExtractor={genreExtractor}
-                addMovie={addMovie}
                 content={"Home"}
-                handleLogout={handleLogout}
-                isLogged={role !== "Visitor"}
               />
               <HomePage />
-
               <Footer />
             </div>
           }
@@ -160,36 +100,28 @@ function App() {
         <Route
           path="/movies"
           element={
-            role !== "Visitor" ? (
+            currentUser ? (
               <div>
                 <Heading
                   setTextFilter={setTextFilter}
                   setShownMovies={setShownMovies}
-                  role={role}
-                  setRole={setRole}
                   typesExtractor={typesExtractor}
                   qualityExtractor={qualityExtractor}
                   genreExtractor={genreExtractor}
-                  addMovie={addMovie}
                   content={"Movies"}
-                  handleLogout={handleLogout}
-                  isLogged={role !== "Visitor"}
                 />
                 <div>
                   <div className="main-content">
                     <MovieList
-                      movies={shownMovies}
                       typeFilter={typeFilter}
                       qualityFilter={qualityFilter}
                       ratingFilter={ratingFilter}
                       genreFilter={genreFilter}
                       textFilter={textFilter}
-                      role={role}
-                      deleteMovie={handleDeleteMovie}
+                      // role={role}
                       typesExtractor={typesExtractor}
                       qualityExtractor={qualityExtractor}
                       genreExtractor={genreExtractor}
-                      editMovie={editMovie}
                       resetFilters={resetFilters}
                       /* Filter props */
                       setTypeFilter={setTypeFilter}
@@ -219,17 +151,12 @@ function App() {
               <Heading
                 setTextFilter={setTextFilter}
                 setShownMovies={setShownMovies}
-                role={role}
-                setRole={setRole}
                 typesExtractor={typesExtractor}
                 qualityExtractor={qualityExtractor}
                 genreExtractor={genreExtractor}
-                addMovie={addMovie}
                 content={"Movie"}
-                handleLogout={handleLogout}
-                isLogged={role !== "Visitor"}
               />
-              <MoviePage movies={shownMovies} />
+              <MoviePage />
               <div style={{ position: "absolute", marginTop: "710px" }}>
                 <Footer />
               </div>
@@ -237,10 +164,6 @@ function App() {
           }
         ></Route>
       </Routes>
-
-      {/* <div style={{ position: "absolute", marginTop: "700px" }}>
-        <Footer />
-      </div> */}
     </div>
   );
 }

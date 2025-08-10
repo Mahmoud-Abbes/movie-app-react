@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import ReactStars from "react-stars";
+import { addMovie } from "../../redux/actions";
 
 const AddMovie = ({
   show,
@@ -8,8 +10,8 @@ const AddMovie = ({
   typesExtractor,
   qualityExtractor,
   genreExtractor,
-  addMovie,
 }) => {
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [trailerLink, setTrailerLink] = useState("");
   const [rating, setRating] = useState("");
@@ -33,7 +35,6 @@ const AddMovie = ({
   /* Cancleing handeling */
   const handleClose = () => {
     setName("")
-    
     setMedia("")
     setShow(false);
   };
@@ -58,7 +59,7 @@ const AddMovie = ({
       trailerLink.trim() !== "" &&
       imageURL.trim() !== ""
     ) {
-      addMovie(newMovie);
+      dispatch(addMovie(newMovie));
       setnewGenre("");
       setNewMedia("");
       setNewQuality("");

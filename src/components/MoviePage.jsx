@@ -1,4 +1,3 @@
-// import { Breadcrumbs, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { FaPlay } from "react-icons/fa";
@@ -8,12 +7,14 @@ import { Link, useParams } from "react-router-dom";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
 import TrailerModal from "./TrailerModal";
+import { useSelector } from "react-redux";
 
-const MoviePage = ({ movies }) => {
+const MoviePage = () => {
+  const { movies } = useSelector((state) => state.reducer);
   const paramsID = useParams().id;
   const el = movies.find((el) => el.id === Number(paramsID));
   const [sohwTrailer, setSohwTrailer] = useState(false);
-  
+
   return (
     <div>
       <div className="movie-page-image-container">
@@ -30,7 +31,7 @@ const MoviePage = ({ movies }) => {
             </Typography>
           </Breadcrumbs>
         </div>
-        
+
         <div className="movie-details">
           <img src={el.imageURL} alt="" />
           <div
@@ -41,7 +42,10 @@ const MoviePage = ({ movies }) => {
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Button className="trailer-btn" onClick={() =>setSohwTrailer(true)}>
+              <Button
+                className="trailer-btn"
+                onClick={() => setSohwTrailer(true)}
+              >
                 <FaPlay />
                 <span>Watch Trailer</span>
               </Button>
@@ -51,7 +55,11 @@ const MoviePage = ({ movies }) => {
               </div>
             </div>
 
-            <TrailerModal link={el.trailerLink} show={sohwTrailer} setShow={setSohwTrailer}/>
+            <TrailerModal
+              link={el.trailerLink}
+              show={sohwTrailer}
+              setShow={setSohwTrailer}
+            />
 
             <div
               style={{

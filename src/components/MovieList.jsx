@@ -4,20 +4,18 @@ import { Link } from "react-router-dom";
 
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
+import { useSelector } from "react-redux";
 
 const MovieList = ({
-  movies,
   qualityFilter,
   typeFilter,
   ratingFilter,
   genreFilter,
   textFilter,
   role,
-  deleteMovie,
   typesExtractor,
   qualityExtractor,
   genreExtractor,
-  editMovie,
   resetFilters,
   /* Filter Props */
   setTypeFilter,
@@ -25,6 +23,9 @@ const MovieList = ({
   setRatingFilter,
   modifyGenreFilter,
 }) => {
+  const {movies} = useSelector((state) => state.reducer);
+  
+
   const moviesFilter = () => {
     let filteredMovies = movies;
     if (qualityFilter !== "All") {
@@ -59,8 +60,12 @@ const MovieList = ({
 
   return (
     <div>
-      <div style={{marginTop: "-28px", marginBottom: "28px"}}>
-        <Breadcrumbs color="rgb(82, 81, 81)" separator="›" aria-label="breadcrumb">
+      <div style={{ marginTop: "-28px", marginBottom: "28px" }}>
+        <Breadcrumbs
+          color="rgb(82, 81, 81)"
+          separator="›"
+          aria-label="breadcrumb"
+        >
           <Link to="/" className="bread-crumb bread-crumb-movies">
             Home
           </Link>
@@ -88,11 +93,9 @@ const MovieList = ({
             typesExtractor={typesExtractor}
             qualityExtractor={qualityExtractor}
             genreExtractor={genreExtractor}
-            deleteMovie={deleteMovie}
             role={role}
             key={el.id}
             el={el}
-            editMovie={editMovie}
             resetFilters={resetFilters}
           />
         ))}

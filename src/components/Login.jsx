@@ -4,10 +4,12 @@ import { Button, Form } from "react-bootstrap";
 import { FcGoogle } from "react-icons/fc";
 import { HiArrowSmRight } from "react-icons/hi";
 import { IoIosArrowBack } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { addUser, setCureentUser } from "../redux/actions";
 
-export const Login = ({ handleLogin, handleRegister }) => {
+export const Login = (/*{ handleLogin, handleRegister }*/) => {
   /* Login Info */
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -22,13 +24,56 @@ export const Login = ({ handleLogin, handleRegister }) => {
 
   const [isLogged, setIsLogged] = useState(false);
 
-  const emptyData = () =>{
+  const emptyData = () => {
     setLoginEmail("");
     setLoginPassword("");
     setRegisterEmail("");
     setRegisterPassword("");
     setRegisterPasswordRetype("");
-  }
+  };
+
+  const { userList } = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
+
+  const fetchAccount = (email) => {
+    console.log(userList)
+    return userList.find((el) => el.email === email);
+  };
+
+  // ---------------------- Register Handeling ---------------------- //
+
+  const handleRegister = (email, pass) => {
+    if (fetchAccount(email)) {
+      return false;
+    }
+
+    let newUser = {
+      email: email,
+      password: pass,
+      role: "User",
+    };
+
+    dispatch(addUser(newUser));
+    return true;
+  };
+
+  const handleRegisterSubmit = (e) => {
+    e.preventDefault();
+    if (registerPassword !== registerPasswordRetype) {
+      toast.error("Password does not match");
+    } else {
+      let response = handleRegister(registerEmail, registerPassword);
+      if (response) {
+        emptyData();
+        setregister(false);
+        toast.success("Registred successfaully !");
+      } else {
+        toast.error("Email has already been used");
+      }
+    }
+  };
+
+  // ---------------------- Login Handeling ---------------------- //
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
@@ -37,20 +82,16 @@ export const Login = ({ handleLogin, handleRegister }) => {
       : toast.error("Incorrect email or password");
   };
 
-  const handleRegisterSubmit = (e) => {
-    e.preventDefault();
-    if (registerPassword !== registerPasswordRetype) {
-        toast.error("Password does not match")
-    } else {
-      let response = handleRegister(registerEmail, registerPassword);
-      if(response){
-        emptyData();
-        setregister(false);
-        toast.success("Registred successfaully !")
-      }else{
-        toast.error("Email has already been used");
+  const handleLogin = (email, pass) => {
+    let accountFetch = fetchAccount(email);
+    if (accountFetch) {
+      if (accountFetch.password === pass) {
+        dispatch(setCureentUser(accountFetch));
+        return true;
       }
+      // return false;
     }
+    return false;
   };
 
   return isLogged === false ? (
@@ -197,7 +238,10 @@ export const Login = ({ handleLogin, handleRegister }) => {
               </span>
             </div>
 
-            <Form style={{ display: "flex", flexDirection: "column" }} onSubmit={handleRegisterSubmit}>
+            <Form
+              style={{ display: "flex", flexDirection: "column" }}
+              onSubmit={handleRegisterSubmit}
+            >
               <Form.Group>
                 <span className="coordinates-label">Email</span>
                 <Form.Control

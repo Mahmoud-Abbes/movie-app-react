@@ -9,19 +9,19 @@ import { BiMovie } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
 import { IoMdLogIn } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/actions";
 
 const Heading = ({
   setTextFilter,
-  role,
-  handleLogout,
   typesExtractor,
   qualityExtractor,
   genreExtractor,
-  addMovie,
   content,
-  isLogged,
 }) => {
   const [showAddMovie, setShowAddMovie] = useState(false);
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.userReducer);
   return (
     <div>
       <Navbar
@@ -34,7 +34,6 @@ const Heading = ({
           genreExtractor={genreExtractor}
           show={showAddMovie}
           setShow={setShowAddMovie}
-          addMovie={addMovie}
         />
         <Container fluid>
           <Link
@@ -76,7 +75,7 @@ const Heading = ({
             <div className="nav-icons-functionality-icon">
               <div></div>
 
-              {role === "Admin" && content !== "Home" ? (
+              {currentUser && currentUser.role === "Admin" && content !== "Home" ? (
                 <div>
                   <FaPlus
                     className="nav-icon"
@@ -84,7 +83,7 @@ const Heading = ({
                   />
                 </div>
               ) : content !== "Movies" ? (
-                isLogged ? (
+                currentUser ? (
                   <Link to="/movies">
                     <BiMovie className="nav-icon" />
                   </Link>
@@ -92,8 +91,8 @@ const Heading = ({
               ) : null}
             </div>
             <div className="nav-icons-user-icon">
-              {isLogged ? (
-                role === "Admin" ? (
+              {currentUser ? (
+                currentUser.role === "Admin" ? (
                   <RiAdminLine className="nav-icon" />
                 ) : (
                   <AiOutlineUser className="nav-icon" />
@@ -104,8 +103,11 @@ const Heading = ({
                 </Link>
               )}
 
-              {isLogged ? (
-                <CiLogout className="nav-icon" onClick={() => handleLogout()} />
+              {currentUser ? (
+                <CiLogout
+                  className="nav-icon"
+                  onClick={() => dispatch(logout())}
+                />
               ) : (
                 <Link to={"/login"}>
                   <IoMdLogIn className="nav-icon" />

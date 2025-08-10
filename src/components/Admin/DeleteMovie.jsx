@@ -1,12 +1,13 @@
 import { Button, Modal } from "react-bootstrap";
 import { IoIosWarning } from "react-icons/io";
+import { useDispatch } from "react-redux";
+import { deleteMovie } from "../../redux/actions";
 
-const DeleteMovie = ({ show, setShow, el, deleteMovie }) => {
+const DeleteMovie = ({ show, setShow, el }) => {
+  const dispatch = useDispatch();
   return (
-    <div
-      className="modal show"
-    >
-      <Modal show={show} style={{marginTop: "150px"}} >
+    <div className="modal show">
+      <Modal show={show} style={{ marginTop: "150px" }}>
         <Modal.Header
           closeButton
           style={{
@@ -16,7 +17,7 @@ const DeleteMovie = ({ show, setShow, el, deleteMovie }) => {
             borderBottomColor: "transparent",
             marginLeft: "430px",
             marginTop: "7px",
-            zIndex: "1"
+            zIndex: "1",
           }}
           onHide={() => setShow(false)}
         ></Modal.Header>
@@ -36,26 +37,34 @@ const DeleteMovie = ({ show, setShow, el, deleteMovie }) => {
               borderRadius: "35px",
               display: "flex",
               justifyContent: "center",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
-            <IoIosWarning style={{fontSize: "40px", color: "#ff3f56"}}/>
+            <IoIosWarning style={{ fontSize: "40px", color: "#ff3f56" }} />
           </div>
           <span className="delete-movie-title">Delete Movie</span>
-          <span className="delete-movie-description">You're going to delete the "{el.name}" movie. Are you sure ?</span>
+          <span className="delete-movie-description">
+            You're going to delete the "{el.name}" movie. Are you sure ?
+          </span>
         </Modal.Body>
-        <Modal.Footer style={{
+        <Modal.Footer
+          style={{
             display: "flex",
             justifyContent: "center",
-            borderTopColor: "transparent"
-        }}>
-          <Button variant="secondary" className="delte-btns cancle-delete-btn" onClick={() => setShow(false)}>
+            borderTopColor: "transparent",
+          }}
+        >
+          <Button
+            variant="secondary"
+            className="delte-btns cancle-delete-btn"
+            onClick={() => setShow(false)}
+          >
             No, keep it.
           </Button>
           <Button
             variant="primary"
             onClick={() => {
-              deleteMovie(el.id);
+              dispatch(deleteMovie(el.id));
               setShow(false);
             }}
             className="delte-btns confirm-delete-btn"
