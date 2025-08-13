@@ -7,26 +7,28 @@ import { RiAdminLine } from "react-icons/ri";
 import AddMovie from "./Admin/AddMovie";
 import { BiMovie } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import { CiLogout } from "react-icons/ci";
 import { IoMdLogIn } from "react-icons/io";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../redux/actions";
+import { useSelector } from "react-redux";
+import ProfileDropdown from "./ProfileDropdown";
 
 const Heading = ({
   setTextFilter,
   typesExtractor,
   qualityExtractor,
   genreExtractor,
-  content,
 }) => {
   const [showAddMovie, setShowAddMovie] = useState(false);
-  const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.userReducer);
+  const { currentPage } = useSelector((state) => state.reducer);
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+
   return (
     <div>
       <Navbar
         expand="lg"
-        className={`hading-bar ${content === "Movie" ? "movie-heading" : null}`}
+        className={`hading-bar ${
+          currentPage === "Movie" ? "movie-heading" : null
+        }`}
       >
         <AddMovie
           typesExtractor={typesExtractor}
@@ -48,13 +50,13 @@ const Heading = ({
             <Navbar.Brand id="nav-image">
               <MdLocalMovies style={{ marginRight: "15px" }} />
               <span className="nav-title">
-                {content !== "Home" ? "MOVIES FOR ALL" : null}
+                {currentPage !== "Home" ? "MOVIES FOR ALL" : null}
               </span>
             </Navbar.Brand>
           </Link>
 
           <Form className="d-flex" id="search-bar">
-            {content === "Movies" ? (
+            {currentPage === "Movies" ? (
               <>
                 <Button id="search-btn">
                   <MdOutlineSearch />
@@ -72,48 +74,45 @@ const Heading = ({
           </Form>
 
           <div className="nav-icons" style={{ width: "20%" }}>
-            <div className="nav-icons-functionality-icon">
-              <div></div>
-
-              {currentUser && currentUser.role === "Admin" && content !== "Home" ? (
-                <div>
+            {currentPage === "Home" ? (
+              <div>
+                <Link to="/movies">
+                  <BiMovie className="nav-icon" />
+                </Link>
+                {currentUser ? (
+                  currentUser.role === "Admin" ? (
+                    <RiAdminLine className="nav-icon" onClick={() => setShowProfileDropdown(!showProfileDropdown)}/>
+                  ) : (
+                    <AiOutlineUser className="nav-icon" onClick={() => setShowProfileDropdown(!showProfileDropdown)} />
+                  )
+                ) : (
+                  <Link to={"/login"}>
+                    <IoMdLogIn className="nav-icon" />
+                  </Link>
+                )}
+              </div>
+            ) : currentPage === "Movies" ? (
+              currentUser && currentUser.role === "Admin" ? (
+                <>
                   <FaPlus
                     className="nav-icon"
                     onClick={() => setShowAddMovie(true)}
                   />
-                </div>
-              ) : content !== "Movies" ? (
-                currentUser ? (
-                  <Link to="/movies">
-                    <BiMovie className="nav-icon" />
-                  </Link>
-                ) : null
-              ) : null}
-            </div>
-            <div className="nav-icons-user-icon">
-              {currentUser ? (
-                currentUser.role === "Admin" ? (
-                  <RiAdminLine className="nav-icon" />
-                ) : (
-                  <AiOutlineUser className="nav-icon" />
-                )
+                  <RiAdminLine className="nav-icon" onClick={() => setShowProfileDropdown(!showProfileDropdown)}/>
+                </>
               ) : (
+                <AiOutlineUser className="nav-icon" onClick={() => setShowProfileDropdown(!showProfileDropdown)}/>
+              )
+            ) : (
+              <>
                 <Link to="/movies">
                   <BiMovie className="nav-icon" />
                 </Link>
-              )}
-
-              {currentUser ? (
-                <CiLogout
-                  className="nav-icon"
-                  onClick={() => dispatch(logout())}
-                />
-              ) : (
-                <Link to={"/login"}>
-                  <IoMdLogIn className="nav-icon" />
-                </Link>
-              )}
-            </div>
+                <AiOutlineUser className="nav-icon" onClick={() => setShowProfileDropdown(!showProfileDropdown)}/>
+              </>
+            )}
+            
+            {showProfileDropdown ? <ProfileDropdown setShow={setShowProfileDropdown}/> : null}
           </div>
         </Container>
       </Navbar>

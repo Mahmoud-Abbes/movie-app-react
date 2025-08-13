@@ -8,8 +8,11 @@ import MoviePage from "./components/MoviePage";
 import Footer from "./components/Footer";
 import { Login } from "./components/Login";
 import { useSelector } from "react-redux";
+import Profile from "./components/Profile";
+import UserManagement from "./components/Admin/UserManagement";
 
 function App() {
+  const { currentPage } = useSelector((state) => state.reducer);
   const { movies } = useSelector((state) => state.reducer);
   const [shownMovies, setShownMovies] = useState(movies);
 
@@ -19,8 +22,7 @@ function App() {
   const [genreFilter, setGenreFilter] = useState([]);
   const [textFilter, setTextFilter] = useState("");
 
-  const { currentUser } = useSelector(state => state.userReducer)
-
+  const { currentUser } = useSelector((state) => state.userReducer);
 
   const handleGenreFilter = (genre) => {
     genreFilter.includes(genre)
@@ -74,96 +76,77 @@ function App() {
 
   return (
     <div className="App">
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            <Login />
-          }
+      {currentPage !== "Login" ? (
+        <Heading
+          setTextFilter={setTextFilter}
+          setShownMovies={setShownMovies}
+          typesExtractor={typesExtractor}
+          qualityExtractor={qualityExtractor}
+          genreExtractor={genreExtractor}
         />
-        <Route
-          path="/"
-          element={
-            <div>
-              <Heading
-                setTextFilter={setTextFilter}
-                typesExtractor={typesExtractor}
-                qualityExtractor={qualityExtractor}
-                genreExtractor={genreExtractor}
-                content={"Home"}
-              />
-              <HomePage />
-              <Footer />
-            </div>
-          }
-        ></Route>
+      ) : null}
+
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<HomePage />}></Route>
         <Route
           path="/movies"
           element={
             currentUser ? (
-              <div>
-                <Heading
-                  setTextFilter={setTextFilter}
-                  setShownMovies={setShownMovies}
+              <div className="main-content">
+                <MovieList
+                  typeFilter={typeFilter}
+                  qualityFilter={qualityFilter}
+                  ratingFilter={ratingFilter}
+                  genreFilter={genreFilter}
+                  textFilter={textFilter}
                   typesExtractor={typesExtractor}
                   qualityExtractor={qualityExtractor}
                   genreExtractor={genreExtractor}
-                  content={"Movies"}
+                  resetFilters={resetFilters}
+                  /* Filter props */
+                  setTypeFilter={setTypeFilter}
+                  setQualityFilter={setQualityFilter}
+                  // movies={shownMovies}
+                  setRatingFilter={setRatingFilter}
+                  // ratingFilter={ratingFilter}
+                  modifyGenreFilter={handleGenreFilter}
+                  // textFilter={textFilter}
+                  // typesExtractor={typesExtractor}
+                  // qualityExtractor={qualityExtractor}
+                  // genreExtractor={genreExtractor}
                 />
-                <div>
-                  <div className="main-content">
-                    <MovieList
-                      typeFilter={typeFilter}
-                      qualityFilter={qualityFilter}
-                      ratingFilter={ratingFilter}
-                      genreFilter={genreFilter}
-                      textFilter={textFilter}
-                      // role={role}
-                      typesExtractor={typesExtractor}
-                      qualityExtractor={qualityExtractor}
-                      genreExtractor={genreExtractor}
-                      resetFilters={resetFilters}
-                      /* Filter props */
-                      setTypeFilter={setTypeFilter}
-                      setQualityFilter={setQualityFilter}
-                      // movies={shownMovies}
-                      setRatingFilter={setRatingFilter}
-                      // ratingFilter={ratingFilter}
-                      modifyGenreFilter={handleGenreFilter}
-                      // textFilter={textFilter}
-                      // typesExtractor={typesExtractor}
-                      // qualityExtractor={qualityExtractor}
-                      // genreExtractor={genreExtractor}
-                    />
-                  </div>
-                </div>
-                <Footer />
               </div>
             ) : (
               <Navigate to={"/login"} />
             )
           }
         />
+        <Route path="/movie/:id" element={<MoviePage />} />
         <Route
-          path="/movie/:id"
+          path="/profile"
           element={
-            <div>
-              <Heading
-                setTextFilter={setTextFilter}
-                setShownMovies={setShownMovies}
-                typesExtractor={typesExtractor}
-                qualityExtractor={qualityExtractor}
-                genreExtractor={genreExtractor}
-                content={"Movie"}
-              />
-              <MoviePage />
-              <div style={{ position: "absolute", marginTop: "710px" }}>
-                <Footer />
-              </div>
-            </div>
+            currentUser ? (
+              // <div className="main-content">
+                <Profile />
+              // </div>
+            ) : (
+              <Navigate to={"/login"} />
+            )
           }
-        ></Route>
+        />
+
+        <Route path="/users" element={<div className="main-content"><UserManagement/></div>}/>
       </Routes>
+      {currentPage !== "Login" ? (
+        currentPage !== "Movie" ? (
+          <Footer />
+        ) : (
+          <div style={{ position: "absolute", marginTop: "710px" }}>
+            <Footer />
+          </div>
+        )
+      ) : null}
     </div>
   );
 }

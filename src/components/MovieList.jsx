@@ -1,10 +1,12 @@
 import FilterBar from "./FilterBar";
 import MovieCard from "./MovieCard";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { changeCurrentPage } from "../redux/actions";
+import { useEffect } from "react";
 
 const MovieList = ({
   qualityFilter,
@@ -23,8 +25,15 @@ const MovieList = ({
   setRatingFilter,
   modifyGenreFilter,
 }) => {
-  const {movies} = useSelector((state) => state.reducer);
-  
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(changeCurrentPage("Movies"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const { movies } = useSelector((state) => state.reducer);
+  const { currentUser } = useSelector((state) => state.userReducer);
 
   const moviesFilter = () => {
     let filteredMovies = movies;
@@ -58,7 +67,7 @@ const MovieList = ({
     return filteredMovies;
   };
 
-  return (
+  return currentUser ? (
     <div>
       <div style={{ marginTop: "-28px", marginBottom: "28px" }}>
         <Breadcrumbs
@@ -101,6 +110,8 @@ const MovieList = ({
         ))}
       </div>
     </div>
+  ) : (
+    <Navigate to={"/Home"} />
   );
 };
 

@@ -1,8 +1,9 @@
 import { movies } from "../DataBase";
-import { ADD_MOVIE, DELETE_MOVIE, EDIT_MOVIE } from "./actionTypes";
+import { ADD_MOVIE, CHANGE_CURRENT_PAGE, DELETE_MOVIE, EDIT_MOVIE } from "./actionTypes";
 
 const initialState = {
   movies: movies,
+  currentPage : "",
 };
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -24,6 +25,12 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         movies: state.movies.filter((el) => el.id !== payload),
       };
+    
+    case CHANGE_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: payload,
+      }
 
     default:
       return state;

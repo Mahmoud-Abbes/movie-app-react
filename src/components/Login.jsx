@@ -1,5 +1,5 @@
 import { Checkbox, FormControlLabel } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { FcGoogle } from "react-icons/fc";
 import { HiArrowSmRight } from "react-icons/hi";
@@ -7,15 +7,23 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { addUser, setCureentUser } from "../redux/actions";
+import { addUser, changeCurrentPage, setCureentUser } from "../redux/actions";
 
-export const Login = (/*{ handleLogin, handleRegister }*/) => {
+export const Login = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(changeCurrentPage("Login"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   /* Login Info */
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
   /* Register Info */
   const [registerEmail, setRegisterEmail] = useState("");
+  const [name, setName] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [registerPasswordRetype, setRegisterPasswordRetype] = useState("");
 
@@ -30,13 +38,13 @@ export const Login = (/*{ handleLogin, handleRegister }*/) => {
     setRegisterEmail("");
     setRegisterPassword("");
     setRegisterPasswordRetype("");
+    setName("");
   };
 
   const { userList } = useSelector((state) => state.userReducer);
-  const dispatch = useDispatch();
 
   const fetchAccount = (email) => {
-    console.log(userList)
+    console.log(userList);
     return userList.find((el) => el.email === email);
   };
 
@@ -48,6 +56,7 @@ export const Login = (/*{ handleLogin, handleRegister }*/) => {
     }
 
     let newUser = {
+      name: name,
       email: email,
       password: pass,
       role: "User",
@@ -89,7 +98,6 @@ export const Login = (/*{ handleLogin, handleRegister }*/) => {
         dispatch(setCureentUser(accountFetch));
         return true;
       }
-      // return false;
     }
     return false;
   };
@@ -243,6 +251,17 @@ export const Login = (/*{ handleLogin, handleRegister }*/) => {
               onSubmit={handleRegisterSubmit}
             >
               <Form.Group>
+                <span className="coordinates-label">Name</span>
+                <Form.Control
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  type="text"
+                  className="coordinates-tf"
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group style={{ marginTop: "15px" }}>
                 <span className="coordinates-label">Email</span>
                 <Form.Control
                   value={registerEmail}
@@ -307,7 +326,7 @@ export const Login = (/*{ handleLogin, handleRegister }*/) => {
               style={{
                 display: "flex",
                 justifyContent: "center",
-                marginTop: "25px",
+                marginTop: "30px",
               }}
             >
               <span className="auth-question">Already have an account ?</span>

@@ -1,11 +1,20 @@
 import { Carousel } from "react-bootstrap";
 import { coverImages } from "../DataBase";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MdLocalMovies } from "react-icons/md";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { changeCurrentPage } from "../redux/actions";
 
 const HomePage = () => {
-  console.log(useParams());
+    const dispatch = useDispatch();  
+
+    useEffect(() => {
+      dispatch(changeCurrentPage("Home"));
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+  
   return (
     <div style={{backgroundColor: "#3c5f93ff" }}>
       <div
@@ -29,8 +38,8 @@ const HomePage = () => {
             alignItems: "stretch",
           }}
         >
-          {coverImages.map((el) => (
-            <Carousel.Item
+          {coverImages.map((el,i) => (
+            <Carousel.Item key={i}
               style={{
                 width: "100%",
                 height: "100%",
@@ -68,7 +77,7 @@ const HomePage = () => {
             </span>
             <Link to="/movies">
               <button
-                class="button-36"
+                className="button-36"
                 style={{ fontSize: "20px", borderRadius: "35px" }}
               >
                 <span style={{ marginRight: "30px" }}>Browse All Movies</span>

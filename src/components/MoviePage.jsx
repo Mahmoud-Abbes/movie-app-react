@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { FaPlay } from "react-icons/fa";
 import ReactStars from "react-stars";
@@ -7,13 +7,21 @@ import { Link, useParams } from "react-router-dom";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
 import TrailerModal from "./TrailerModal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { changeCurrentPage } from "../redux/actions";
 
 const MoviePage = () => {
   const { movies } = useSelector((state) => state.reducer);
   const paramsID = useParams().id;
   const el = movies.find((el) => el.id === Number(paramsID));
   const [sohwTrailer, setSohwTrailer] = useState(false);
+
+    const dispatch = useDispatch();  
+
+    useEffect(() => {
+      dispatch(changeCurrentPage("Movie"));
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
   return (
     <div>

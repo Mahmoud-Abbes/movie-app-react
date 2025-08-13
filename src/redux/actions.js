@@ -1,4 +1,15 @@
-import { ADD_MOVIE, ADD_USER, DELETE_MOVIE, EDIT_MOVIE, LOG_OUT, SET_CURRENT_USER } from "./actionTypes";
+import {
+  ADD_MOVIE,
+  ADD_USER,
+  CHANGE_CURRENT_PAGE,
+  CHANGE_USER_IMAGE,
+  CHANGE_USER_NAME,
+  DELETE_MOVIE,
+  EDIT_MOVIE,
+  LOG_OUT,
+  RESET_PASSWORD,
+  SET_CURRENT_USER,
+} from "./actionTypes";
 
 // ---------------------- Movie Actions ---------------------- //
 
@@ -17,11 +28,18 @@ export const addMovie = (movie) => {
 };
 
 export const deleteMovie = (id) => {
-    return {
-        type: DELETE_MOVIE,
-        payload: id
-    }
-}
+  return {
+    type: DELETE_MOVIE,
+    payload: id,
+  };
+};
+
+export const changeCurrentPage = (page) => {
+  return {
+    type: CHANGE_CURRENT_PAGE,
+    payload: page,
+  };
+};
 
 // ---------------------- User Actions ---------------------- //
 
@@ -29,19 +47,40 @@ export const addUser = (user) => {
   return {
     type: ADD_USER,
     payload: user,
-  }
-}
+  };
+};
 
 export const setCureentUser = (user) => {
   return {
     type: SET_CURRENT_USER,
     payload: user,
-  }
-}
+  };
+};
 
 export const logout = () => {
-  return{
+  return {
     type: LOG_OUT,
     payload: null,
-  }
-}
+  };
+};
+
+export const changeUserName = (name) => {
+  return {
+    type: CHANGE_USER_NAME,
+    payload: name,
+  };
+};
+
+export const resetPassword = (newPassword) => {
+  return {
+    type: RESET_PASSWORD,
+    payload: newPassword,
+  };
+};
+
+export const changeUserImage = (newImage) => {
+  return {
+    type: CHANGE_USER_IMAGE,
+    payload: newImage,
+  };
+};
