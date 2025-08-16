@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { FaPlay } from "react-icons/fa";
 import ReactStars from "react-stars";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
 import TrailerModal from "./TrailerModal";
 import { useDispatch, useSelector } from "react-redux";
-import { changeCurrentPage } from "../redux/actions";
+import { changeCurrentPage, setFavoriteMovie } from "../redux/actions";
+import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 
 const MoviePage = () => {
   const { movies } = useSelector((state) => state.reducer);
@@ -16,14 +17,16 @@ const MoviePage = () => {
   const el = movies.find((el) => el.id === Number(paramsID));
   const [sohwTrailer, setSohwTrailer] = useState(false);
 
-    const dispatch = useDispatch();  
+  const { currentUser } = useSelector((state) => state.userReducer);
+  const [favHover, setFavHover] = useState(false);
+  const dispach = useDispatch();
 
-    useEffect(() => {
-      dispatch(changeCurrentPage("Movie"));
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+  useEffect(() => {
+    dispach(changeCurrentPage("Movie"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  return (
+  return el ? (
     <div>
       <div className="movie-page-image-container">
         <div className="movie-page-breadcrumbs">
@@ -41,6 +44,24 @@ const MoviePage = () => {
         </div>
 
         <div className="movie-details">
+          <div className="fav">
+            <div
+              className="favorite-icon"
+              onClick={(e) => {
+                e.preventDefault();
+                dispach(setFavoriteMovie(el.id));
+              }}
+              onMouseOver={() => setFavHover(true)}
+              onMouseLeave={() => setFavHover(false)}
+            >
+              {favHover || currentUser.favoriteMovies.includes(el.id) ? (
+                <MdFavorite />
+              ) : (
+                <MdFavoriteBorder />
+              )}
+            </div>
+          </div>
+
           <img src={el.imageURL} alt="" />
           <div
             style={{
@@ -111,6 +132,8 @@ const MoviePage = () => {
         </div>
       </div>
     </div>
+  ) : (
+    <Navigate to={"/movies"} />
   );
 };
 

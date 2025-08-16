@@ -2,13 +2,17 @@ import {
   ADD_MOVIE,
   ADD_USER,
   CHANGE_CURRENT_PAGE,
+  CHANGE_USER_BLOCK,
   CHANGE_USER_IMAGE,
   CHANGE_USER_NAME,
+  CHANGE_USER_ROLE,
   DELETE_MOVIE,
   EDIT_MOVIE,
   LOG_OUT,
+  REMOVE_USER,
   RESET_PASSWORD,
   SET_CURRENT_USER,
+  SET_FAVORITE_MOVIE,
 } from "./actionTypes";
 
 // ---------------------- Movie Actions ---------------------- //
@@ -84,3 +88,31 @@ export const changeUserImage = (newImage) => {
     payload: newImage,
   };
 };
+
+export const changeUserRole = (user) => {
+  return {
+    type: CHANGE_USER_ROLE,
+    payload: user,
+  };
+};
+
+export const changeUserBlock = (email) => {
+  return {
+    type: CHANGE_USER_BLOCK,
+    payload: email,
+  };
+};
+
+export const removeUser = (email) => {
+  return{
+    type: REMOVE_USER,
+    payload: email,
+  }
+}
+
+export const setFavoriteMovie = (id) => {
+  return{
+    type: SET_FAVORITE_MOVIE,
+    payload: id,
+  }
+}

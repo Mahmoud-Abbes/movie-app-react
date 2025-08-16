@@ -1,21 +1,27 @@
 import {
   ADD_USER,
+  CHANGE_USER_BLOCK,
   CHANGE_USER_IMAGE,
   CHANGE_USER_NAME,
+  CHANGE_USER_ROLE,
   LOG_OUT,
+  REMOVE_USER,
   RESET_PASSWORD,
   SET_CURRENT_USER,
+  SET_FAVORITE_MOVIE,
 } from "./actionTypes";
 
 const initialState = {
   userList: [
     {
-      name: "Super Admin",
-      email: "admin@gmail.com",
+      name: "Super D Admin",
+      email: "admin0@gmail.com",
       password: "adminadmin",
-      role: "Admin",
+      role: "Manager",
       imageURL: "",
-      blocked: false,
+      blocked: true,
+
+      favoriteMovies: [],
     },
     {
       name: "Mahmoud",
@@ -24,6 +30,25 @@ const initialState = {
       role: "User",
       imageURL: "",
       blocked: false,
+      favoriteMovies: [],
+    },
+    {
+      name: "Super Admin",
+      email: "admin1@gmail.com",
+      password: "adminadmin",
+      role: "Admin",
+      imageURL: "",
+      blocked: false,
+      favoriteMovies: [],
+    },
+    {
+      name: "Super Admin",
+      email: "admin2@gmail.com",
+      password: "adminadmin",
+      role: "Admin",
+      imageURL: "",
+      blocked: false,
+      favoriteMovies: [],
     },
   ],
   currentUser: {
@@ -33,6 +58,7 @@ const initialState = {
     role: "User",
     imageURL: "",
     blocked: false,
+    favoriteMovies: [],
   },
 };
 
@@ -56,6 +82,22 @@ const userReducer = (state = initialState, { type, payload }) => {
         currentUser: { ...state.currentUser, name: payload },
       };
 
+    case CHANGE_USER_ROLE:
+      return {
+        ...state,
+        userList: state.userList.map((el) =>
+          el.email === payload.email ? payload : el
+        ),
+      };
+
+    case CHANGE_USER_BLOCK:
+      return {
+        ...state,
+        userList: state.userList.map((el) =>
+          el.email === payload ? { ...el, blocked: !el.blocked } : el
+        ),
+      };
+
     case RESET_PASSWORD:
       return {
         ...state,
@@ -76,6 +118,33 @@ const userReducer = (state = initialState, { type, payload }) => {
             : el
         ),
         currentUser: { ...state.currentUser, imageURL: payload },
+      };
+
+    case REMOVE_USER:
+      return {
+        ...state,
+        userList: state.userList.filter((el) => el.email !== payload),
+      };
+
+    case SET_FAVORITE_MOVIE:
+      return {
+        ...state,
+        userList: state.userList.map((el) =>
+          el.email === state.currentUser.email
+            ? {
+                ...el,
+                favoriteMovies: el.favoriteMovies.includes(payload)
+                  ? el.favoriteMovies.filter((elt) => elt !== payload)
+                  : [...el.favoriteMovies, payload],
+              }
+            : el
+        ),
+        currentUser: {
+          ...state.currentUser,
+          favoriteMovies: state.currentUser.favoriteMovies.includes(payload)
+            ? state.currentUser.favoriteMovies.filter((elt) => elt !== payload)
+            : [...state.currentUser.favoriteMovies, payload],
+        },
       };
 
     default:

@@ -7,11 +7,12 @@ import ReactStars from "react-stars";
 import DeleteMovie from "./Admin/DeleteMovie";
 import EditMovie from "./Admin/EditMovie";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
+import { setFavoriteMovie } from "../redux/actions";
 
 const MovieCard = ({
   el,
-  // role,
   typesExtractor,
   qualityExtractor,
   genreExtractor,
@@ -20,6 +21,8 @@ const MovieCard = ({
   const [showDelete, setShowDelete] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const { currentUser } = useSelector((state) => state.userReducer);
+  const [favHover, setFavHover] = useState(false);
+  const dispach = useDispatch();
 
   return (
     <div className="movie-card">
@@ -34,9 +37,29 @@ const MovieCard = ({
 
         <div className="movie-rating">
           {currentUser.role === "User" ? (
-            <button className="play-btn">
-              <FaPlay style={{ marginLeft: "3px" }} />
-            </button>
+            <>
+              <div className="favorite">
+                <div
+                  className="fav-icon"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    dispach(setFavoriteMovie(el.id));
+                  }}
+                  onMouseOver={() => setFavHover(true)}
+                  onMouseLeave={() => setFavHover(false)}
+                >
+                  {favHover || currentUser.favoriteMovies.includes(el.id) ? (
+                    <MdFavorite />
+                  ) : (
+                    <MdFavoriteBorder />
+                  )}
+                </div>
+              </div>
+              
+              <button className="play-btn">
+                <FaPlay style={{ marginLeft: "3px" }} />
+              </button>
+            </>
           ) : (
             <div className="movie-admin-controls">
               <Button

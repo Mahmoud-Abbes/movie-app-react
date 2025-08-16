@@ -1,12 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,160;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
 .App {
   background-color: #fafafa;
-  height: 100vh;
+  height: 100%;
 }
 
 .main-content {
-  padding: 50px 80px 50px 80px;
+  padding: 50px 80px 0px 80px;
+  min-height: 89.8vh;
 }
 
 .hading-bar {
@@ -61,7 +62,7 @@
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  min-height: 62.5vh;
+  margin-bottom: 30px;
 }
 
 .movie-card {
@@ -278,6 +279,7 @@
   cursor: pointer;
   background-color: #0c2750;
   transition: 0.5s;
+  box-shadow: -1px -1px 54px -14px rgba(0,0,0,0.75);
 }
 
 .movie-admin-controls {
@@ -840,7 +842,7 @@
 }
 
 .profile-dropdown {
-  width: 190px;
+  width: 200px;
   background-color: white;
   position: absolute;
   z-index: 5000;
@@ -873,10 +875,6 @@
   display: flex;
   justify-content: center;
   font-family: "Poppins";
-}
-
-.users-page {
-  height: 77.2vh; /*------------------- Coded later -------------------------*/
 }
 
 .profile-page .cover {
@@ -928,7 +926,7 @@
   justify-content: end;
 }
 
-.name-image-reset-content{
+.name-image-reset-content {
   display: flex;
   flex-direction: column;
   width: 80%;
@@ -957,7 +955,7 @@
   border-radius: 5px !important;
 }
 
-.name-image-reset .new-image-input{
+.name-image-reset .new-image-input {
   width: 60% !important;
 }
 
@@ -972,4 +970,152 @@
   border-radius: 350px;
   position: absolute;
   margin-top: 40px;
+}
+
+.users-page {
+  height: 90vh;
+  padding: 30px 86px 0px 86px;
+  font-family: "Montserrat";
+}
+
+.users-page .title {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.search-user {
+  display: flex;
+  width: 70%;
+}
+
+.search-user-input {
+  width: 80% !important;
+  border-radius: 0px 5px 5px 0px !important;
+  border-color: #e8eaec !important;
+  border-left: none !important;
+}
+
+#border-change {
+  border-color: rgb(185, 181, 181) !important;
+}
+
+.search-user-input:focus {
+  box-shadow: none !important;
+  border-color: #e8eaec !important;
+}
+
+.search-user-btn {
+  width: 40px;
+  border-radius: 5px 0px 0px 5px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white !important;
+  color: gray !important;
+  border-color: #e8eaec !important;
+  border-right: none !important;
+  cursor: default !important;
+}
+
+.users-container {
+  width: 100%;
+  height: 80%;
+  margin-top: 50px;
+  border-radius: 20px 0px 0px 20px;
+  background-color: white;
+  border: solid #eeefef 2px;
+  overflow-y: scroll;
+}
+
+.users-container::-webkit-scrollbar {
+  width: 14px;
+}
+
+.users-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.users-container::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.users-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.user-info {
+  height: 110px;
+  transition: 0.5s ease;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.users-container hr {
+  margin: 0;
+}
+
+.user-info:hover {
+  background-color: rgb(240, 240, 240);
+}
+
+.user-info .user-image {
+  height: 60px;
+  width: 60px;
+  background: linear-gradient(
+    193deg,
+    rgba(133, 138, 143, 1) 0%,
+    rgb(150, 150, 150) 100%
+  );
+  border-radius: 350px;
+}
+
+.block-btn {
+  text-transform: none !important;
+  background-color: rgb(244, 64, 64) !important;
+  color: white !important;
+  width: 30%;
+}
+
+.user-info .role {
+  padding: 10px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  border-radius: 35px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.user-info .admin-role {
+  background-color: #f5c003;
+}
+
+.user-info .user-role {
+  background-color: #0492c2;
+}
+
+.user-info .other-role {
+  background-color: #98fa97;
+}
+
+.favorite {
+  position: absolute;
+  top: 0px;
+  left: 15px;
+}
+
+.favorite .fav-icon {
+  color: rgb(201, 13, 13);
+  font-size: 30px;
+}
+
+.movie-details .fav {
+  position: absolute; 
+  margin-left: 15px;
+}
+
+.movie-details .fav .favorite-icon {
+  color: rgb(201, 13, 13);
+  font-size: 30px;
 }

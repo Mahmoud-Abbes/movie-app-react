@@ -60,6 +60,9 @@ export const Login = () => {
       email: email,
       password: pass,
       role: "User",
+      imageURL: "",
+      blocked: false,
+      favoriteMovies: [],
     };
 
     dispatch(addUser(newUser));

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Heading from "./components/Heading";
 import MovieList from "./components/MovieList";
@@ -23,6 +23,14 @@ function App() {
   const [textFilter, setTextFilter] = useState("");
 
   const { currentUser } = useSelector((state) => state.userReducer);
+
+  useEffect(() => {
+    setQualityFilter("All");
+    setTypeFilter("All");
+    setRatingFilter(0);
+    setGenreFilter([]);
+    setTextFilter("");
+  }, [currentUser]);
 
   const handleGenreFilter = (genre) => {
     genreFilter.includes(genre)
@@ -125,18 +133,21 @@ function App() {
         <Route path="/movie/:id" element={<MoviePage />} />
         <Route
           path="/profile"
+          element={currentUser ? <Profile /> : <Navigate to={"/login"} />}
+        />
+
+        <Route
+          path="/users"
           element={
-            currentUser ? (
-              // <div className="main-content">
-                <Profile />
-              // </div>
+            currentUser && currentUser.role === "Admin" ? (
+              <UserManagement />
+            ) : currentUser ? (
+              <Navigate to={"/movies"} />
             ) : (
               <Navigate to={"/login"} />
             )
           }
         />
-
-        <Route path="/users" element={<div className="main-content"><UserManagement/></div>}/>
       </Routes>
       {currentPage !== "Login" ? (
         currentPage !== "Movie" ? (

@@ -20,7 +20,6 @@ const Heading = ({
   const [showAddMovie, setShowAddMovie] = useState(false);
   const { currentUser } = useSelector((state) => state.userReducer);
   const { currentPage } = useSelector((state) => state.reducer);
-  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
 
   return (
     <div>
@@ -79,40 +78,56 @@ const Heading = ({
                 <Link to="/movies">
                   <BiMovie className="nav-icon" />
                 </Link>
-                {currentUser ? (
-                  currentUser.role === "Admin" ? (
-                    <RiAdminLine className="nav-icon" onClick={() => setShowProfileDropdown(!showProfileDropdown)}/>
-                  ) : (
-                    <AiOutlineUser className="nav-icon" onClick={() => setShowProfileDropdown(!showProfileDropdown)} />
-                  )
-                ) : (
-                  <Link to={"/login"}>
-                    <IoMdLogIn className="nav-icon" />
-                  </Link>
-                )}
               </div>
             ) : currentPage === "Movies" ? (
               currentUser && currentUser.role === "Admin" ? (
-                <>
-                  <FaPlus
-                    className="nav-icon"
-                    onClick={() => setShowAddMovie(true)}
-                  />
-                  <RiAdminLine className="nav-icon" onClick={() => setShowProfileDropdown(!showProfileDropdown)}/>
-                </>
-              ) : (
-                <AiOutlineUser className="nav-icon" onClick={() => setShowProfileDropdown(!showProfileDropdown)}/>
-              )
+                <FaPlus
+                  className="nav-icon"
+                  onClick={() => setShowAddMovie(true)}
+                />
+              ) : null
             ) : (
               <>
                 <Link to="/movies">
                   <BiMovie className="nav-icon" />
                 </Link>
-                <AiOutlineUser className="nav-icon" onClick={() => setShowProfileDropdown(!showProfileDropdown)}/>
               </>
             )}
-            
-            {showProfileDropdown ? <ProfileDropdown setShow={setShowProfileDropdown}/> : null}
+            {currentUser ? (
+              <div style={{ marginTop: "10px", marginRight: "6px" }}>
+                <ProfileDropdown
+                  menuButton={
+                    currentUser.role !== "Admin" ? (
+                      <div>
+                        {currentUser.imageURL ? (
+                          <div
+                            className="nav-icon"
+                            style={{
+                              backgroundImage: `url(${currentUser.imageURL})`,
+                              backgroundSize: "cover",
+                              backgroundRepeat: "no-repeat",
+                              backgroundPosition: "center",
+                            }}
+                          />
+                        ) : (
+                          <AiOutlineUser className="nav-icon" />
+                        )}
+                        <div style={{ height: "10px" }} />
+                      </div>
+                    ) : (
+                      <div>
+                        <RiAdminLine className="nav-icon" />
+                        <div style={{ height: "10px" }} />
+                      </div>
+                    )
+                  }
+                />
+              </div>
+            ) : (
+              <Link to={"/login"}>
+                <IoMdLogIn className="nav-icon" />
+              </Link>
+            )}
           </div>
         </Container>
       </Navbar>

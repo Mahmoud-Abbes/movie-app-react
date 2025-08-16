@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Breadcrumbs, Typography } from "@mui/material";
 import {
   changeCurrentPage,
   changeUserImage,
@@ -66,7 +67,16 @@ const Profile = () => {
 
   return (
     <div className="profile-page">
-      <div className="cover" />
+      <div className="cover">
+        <Breadcrumbs style={{marginLeft: "85px", marginTop: "20px"}} color="#dbd7d799" separator="›" aria-label="breadcrumb">
+          <Typography key="3" sx={{ color: "#dbd7d799" }}>
+            Account
+          </Typography>
+          <Typography key="3" sx={{ color: "#dbd7d799" }}>
+            Account Settings
+          </Typography>
+        </Breadcrumbs>
+      </div>
       <div className="profile-details">
         <div className="name-and-email">
           <span style={{ fontSize: "30px" }}>{currentUser.name}</span>
