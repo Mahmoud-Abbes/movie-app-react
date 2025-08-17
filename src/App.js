@@ -10,14 +10,15 @@ import { Login } from "./components/Login";
 import { useSelector } from "react-redux";
 import Profile from "./components/Profile";
 import UserManagement from "./components/Admin/UserManagement";
+import Favorites from "./components/Favorites";
 
 function App() {
   const { currentPage } = useSelector((state) => state.reducer);
   const { movies } = useSelector((state) => state.reducer);
   const [shownMovies, setShownMovies] = useState(movies);
 
-  const [qualityFilter, setQualityFilter] = useState("All");
-  const [typeFilter, setTypeFilter] = useState("All");
+  const [qualityFilter, setQualityFilter] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
   const [ratingFilter, setRatingFilter] = useState(0);
   const [genreFilter, setGenreFilter] = useState([]);
   const [textFilter, setTextFilter] = useState("");
@@ -105,13 +106,13 @@ function App() {
                 <MovieList
                   typeFilter={typeFilter}
                   qualityFilter={qualityFilter}
-                  ratingFilter={ratingFilter}
                   genreFilter={genreFilter}
+                  resetFilters={resetFilters}
+                  ratingFilter={ratingFilter}
                   textFilter={textFilter}
                   typesExtractor={typesExtractor}
                   qualityExtractor={qualityExtractor}
                   genreExtractor={genreExtractor}
-                  resetFilters={resetFilters}
                   /* Filter props */
                   setTypeFilter={setTypeFilter}
                   setQualityFilter={setQualityFilter}
@@ -146,6 +147,18 @@ function App() {
             ) : (
               <Navigate to={"/login"} />
             )
+          }
+        />
+
+        <Route
+          path="/favorites"
+          element={
+            <Favorites
+              typesExtractor={typesExtractor}
+              qualityExtractor={qualityExtractor}
+              genreExtractor={genreExtractor}
+              resetFilters={resetFilters}
+            />
           }
         />
       </Routes>

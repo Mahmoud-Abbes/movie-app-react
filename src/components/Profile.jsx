@@ -10,6 +10,7 @@ import {
 import { Form } from "react-bootstrap";
 import { Button } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
+import DeleteUserProfile from "./DeleteUserProfile";
 
 const Profile = () => {
   const { currentUser } = useSelector((state) => state.userReducer);
@@ -18,6 +19,7 @@ const Profile = () => {
   const [newPasswordRetype, setNewPasswordRetype] = useState("");
   const [newName, setNewName] = useState("");
   const [newImage, setNewImage] = useState("");
+  const [showDeleteProfile, setShowDeleteProfile] = useState(false)
 
   const dispatch = useDispatch();
 
@@ -68,7 +70,12 @@ const Profile = () => {
   return (
     <div className="profile-page">
       <div className="cover">
-        <Breadcrumbs style={{marginLeft: "85px", marginTop: "20px"}} color="#dbd7d799" separator="›" aria-label="breadcrumb">
+        <Breadcrumbs
+          style={{ marginLeft: "85px", marginTop: "20px" }}
+          color="#dbd7d799"
+          separator="›"
+          aria-label="breadcrumb"
+        >
           <Typography key="3" sx={{ color: "#dbd7d799" }}>
             Account
           </Typography>
@@ -83,6 +90,14 @@ const Profile = () => {
           <span>{currentUser.email}</span>
           <span>{currentUser.role}</span>
         </div>
+
+        <Button
+          className="delete-account-btn"
+          variant="contained"
+          onClick={() => setShowDeleteProfile(true)}
+        >
+          Delete Account
+        </Button>
 
         <div className="other-info">
           <div className="password-reset">
@@ -211,7 +226,9 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
       <ToastContainer theme="colored" />
+      <DeleteUserProfile show={showDeleteProfile} setShow={setShowDeleteProfile} el={currentUser}/>
 
       <div
         className="image"

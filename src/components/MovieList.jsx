@@ -6,7 +6,7 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
 import { useDispatch, useSelector } from "react-redux";
 import { changeCurrentPage } from "../redux/actions";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 const MovieList = ({
   qualityFilter,
@@ -35,7 +35,10 @@ const MovieList = ({
   const { movies } = useSelector((state) => state.reducer);
   const { currentUser } = useSelector((state) => state.userReducer);
 
-  const moviesFilter = () => {
+  const moviesFilter = useMemo(() => {
+    console.log(
+      `QualityFilter : ${qualityFilter} , TypeFilter : ${typeFilter} , RatingFilter : ${ratingFilter} , GenreFilter : ${genreFilter} , TextFilter : ${textFilter}`
+    );
     let filteredMovies = movies;
     if (qualityFilter !== "All") {
       filteredMovies = filteredMovies.filter(
@@ -65,7 +68,14 @@ const MovieList = ({
       );
     }
     return filteredMovies;
-  };
+  }, [
+    movies,
+    qualityFilter,
+    typeFilter,
+    ratingFilter,
+    genreFilter,
+    textFilter,
+  ]);
 
   return currentUser ? (
     <div>
@@ -97,7 +107,7 @@ const MovieList = ({
       />
 
       <div className="movie-list">
-        {moviesFilter().map((el, i) => (
+        {moviesFilter.map((el, i) => (
           <MovieCard
             typesExtractor={typesExtractor}
             qualityExtractor={qualityExtractor}

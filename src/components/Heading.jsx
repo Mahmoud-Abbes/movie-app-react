@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { IoMdLogIn } from "react-icons/io";
 import { useSelector } from "react-redux";
 import ProfileDropdown from "./ProfileDropdown";
+import { PiHeartFill } from "react-icons/pi";
 
 const Heading = ({
   setTextFilter,
@@ -85,7 +86,11 @@ const Heading = ({
                   className="nav-icon"
                   onClick={() => setShowAddMovie(true)}
                 />
-              ) : null
+              ) : (
+                <Link to="/favorites">
+                  <PiHeartFill className="nav-icon" />
+                </Link>
+              )
             ) : (
               <>
                 <Link to="/movies">
@@ -116,7 +121,19 @@ const Heading = ({
                       </div>
                     ) : (
                       <div>
-                        <RiAdminLine className="nav-icon" />
+                        {currentUser.imageURL ? (
+                          <div
+                            className="nav-icon"
+                            style={{
+                              backgroundImage: `url(${currentUser.imageURL})`,
+                              backgroundSize: "cover",
+                              backgroundRepeat: "no-repeat",
+                              backgroundPosition: "center",
+                            }}
+                          />
+                        ) : (
+                          <RiAdminLine className="nav-icon" />
+                        )}
                         <div style={{ height: "10px" }} />
                       </div>
                     )

@@ -52,14 +52,14 @@ const initialState = {
     },
   ],
   currentUser: {
-    name: "Mahmoud",
-    email: "mah@gmail.com",
-    password: "mah",
-    role: "User",
-    imageURL: "",
-    blocked: false,
-    favoriteMovies: [],
-  },
+      name: "Mahmoud",
+      email: "mah@gmail.com",
+      password: "mah",
+      role: "User",
+      imageURL: "",
+      blocked: false,
+      favoriteMovies: [],
+    },
 };
 
 const userReducer = (state = initialState, { type, payload }) => {
@@ -124,6 +124,7 @@ const userReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         userList: state.userList.filter((el) => el.email !== payload),
+        currentUser : state.currentUser.email === payload ? null : state.currentUser
       };
 
     case SET_FAVORITE_MOVIE:
