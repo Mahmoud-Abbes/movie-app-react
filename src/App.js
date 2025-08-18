@@ -17,8 +17,8 @@ function App() {
   const { movies } = useSelector((state) => state.reducer);
   const [shownMovies, setShownMovies] = useState(movies);
 
-  const [qualityFilter, setQualityFilter] = useState("");
-  const [typeFilter, setTypeFilter] = useState("");
+  const [qualityFilter, setQualityFilter] = useState("All");
+  const [typeFilter, setTypeFilter] = useState("All");
   const [ratingFilter, setRatingFilter] = useState(0);
   const [genreFilter, setGenreFilter] = useState([]);
   const [textFilter, setTextFilter] = useState("");
@@ -31,7 +31,7 @@ function App() {
     setRatingFilter(0);
     setGenreFilter([]);
     setTextFilter("");
-  }, [currentUser]);
+  }, [currentPage]);
 
   const handleGenreFilter = (genre) => {
     genreFilter.includes(genre)
@@ -75,14 +75,6 @@ function App() {
     return genres;
   };
 
-  const resetFilters = () => {
-    setQualityFilter("All");
-    setTypeFilter("All");
-    setRatingFilter(0);
-    setGenreFilter([]);
-    setTextFilter("");
-  };
-
   return (
     <div className="App">
       {currentPage !== "Login" ? (
@@ -107,7 +99,6 @@ function App() {
                   typeFilter={typeFilter}
                   qualityFilter={qualityFilter}
                   genreFilter={genreFilter}
-                  resetFilters={resetFilters}
                   ratingFilter={ratingFilter}
                   textFilter={textFilter}
                   typesExtractor={typesExtractor}
@@ -157,7 +148,6 @@ function App() {
               typesExtractor={typesExtractor}
               qualityExtractor={qualityExtractor}
               genreExtractor={genreExtractor}
-              resetFilters={resetFilters}
             />
           }
         />

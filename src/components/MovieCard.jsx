@@ -16,7 +16,6 @@ const MovieCard = ({
   typesExtractor,
   qualityExtractor,
   genreExtractor,
-  resetFilters,
 }) => {
   const [showDelete, setShowDelete] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
@@ -28,7 +27,6 @@ const MovieCard = ({
     <div className="movie-card">
       <Link
         to={currentUser.role === "User" ? `/movie/${el.id}` : null}
-        onClick={() => (currentUser.role === "User" ? resetFilters() : null)}
       >
         <img src={el.imageURL} alt="" className="movie-image" />
         <div className="movie-quality">

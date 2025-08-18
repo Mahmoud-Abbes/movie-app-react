@@ -1110,6 +1110,9 @@
   font-size: 30px;
 }
 
+.movie-rating:hover .favorite {
+  opacity: 1;
+}
 .movie-details .fav {
   position: absolute;
   margin-left: 15px;
@@ -1120,12 +1123,12 @@
   font-size: 30px;
 }
 
-.favorites-page-container{
+.favorites-page-container {
   min-height: 89.8vh;
   padding: 50px 80px 30px 80px;
 }
 
-.favorites-page-container .no-movies-text{
+.favorites-page-container .no-movies-text {
   text-align: center;
   font-family: "Poppins";
   margin-top: 50px;
